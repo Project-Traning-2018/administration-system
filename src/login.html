@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 2 | Log in</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="../bower_components/Ionicons/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="../plugins/iCheck/square/blue.css">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- Google Font -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+</head>
+
+<body class="hold-transition login-page">
+  <div class="login-box" style="margin-top:0;position: absolute;top: 20%;left: 50%;margin-left: -180px;">
+    
+      <div class="login-logo">
+        <a href="../../index2.html"><b style="color: #3c8dbc">报名助手后台管理系统</b></a>
+      </div>
+    
+
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+      <p class="login-box-msg" style="text-align: left;padding-left: 0;font-weight: bold;font-size: 20px">密码登录</p>
+
+      <form action="../../index2.html" method="post">
+        <div class="form-group has-feedback">
+          <span class="glyphicon glyphicon-user form-control-feedback"></span>
+          <input type="email" class="form-control" placeholder="用户名" id="user">
+        </div>
+        <div class="form-group has-feedback">
+          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          <input type="password" class="form-control" placeholder="密码" id="pass">
+        </div>
+        <div class="row">
+          <div class="col-xs-8">
+            <!-- <div class="checkbox icheck">
+              <label>
+                <input type="checkbox"> &nbsp;记住我
+              </label>
+            </div> -->
+          </div>
+          <!-- /.col -->
+          <div class="col-xs-4">
+            <button type="submit" class="btn btn-primary btn-block btn-flat" id="login">登录</button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+
+    </div>
+    <!-- /.login-box-body -->
+  </div>
+  <!-- /.login-box -->
+
+  <!-- jQuery 3 -->
+  <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap 3.3.7 -->
+  <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- iCheck -->
+  <script src="../plugins/iCheck/icheck.min.js"></script>
+  <script>
+    $(function () {
+      localStorage.removeItem('username')
+      let $login = $('#login');
+      let $user = $('#user');
+      let $pass = $('#pass');
+      $login.click(function (e) {
+        e.preventDefault();
+        if ($user.val() == '') {
+          alert('请输入用户名');
+          return;
+        } else {
+        }
+        if ($pass.val() == '') {
+          alert('请输入密码');
+          return;
+        }
+        $.ajax({
+          type: "POST",
+          url: "https://activity103.mynatapp.cc/back/login?UserLog=" + $user.val() + "&Password=" + $pass.val(),
+          success: function (response) {
+            console.log(response)
+            if (response.code === 12) {
+              window.localStorage.setItem('username', '' + $user.val());
+              location.href = "file:///H:/GitHub/WeiXinMiniProgram/FE/prototype1/manage/src/index.html"
+            } else if (response.code === 13) {
+              window.localStorage.setItem('username', '' + $user.val());
+              location.href = "file:///H:/GitHub/WeiXinMiniProgram/FE/prototype1/manage/src/index.html"
+            } else if (response.code === 9) {
+              alert('登录失败');
+              $user.val('');
+              $pass.val('');
+              $user.focus();
+            }
+          }
+        });
+      })
+      $('input').iCheck({
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_square-blue',
+        increaseArea: '20%' /* optional */
+      });
+    });
+  </script>
+</body>
+
+</html>
